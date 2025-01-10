@@ -1,4 +1,4 @@
-import {ThemeProvider} from "@/app/components/theme-provider";
+import {ThemeProvider} from "@/components/theme-provider";
 import React from "react";
 import {Metadata} from "next";
 
