@@ -1,6 +1,7 @@
 import {ThemeProvider} from "@/components/theme-provider";
 import React from "react";
 import {Metadata} from "next";
+import './globals.css';
 
 export const metadata: Metadata = {
   title: "HF Flow",
