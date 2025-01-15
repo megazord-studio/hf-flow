@@ -17,6 +17,17 @@ import {
   SelectItem,
   SelectLabel,
 } from "@/components/ui/select";
+import { Container } from "@/components/Container";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function Sentiment() {
   const [models, setModels] = useState<Model[]>([]);
@@ -71,12 +82,13 @@ export default function Sentiment() {
   };
 
   return (
-    <div>
-      <h1>Sentiment Analysis</h1>
+    <Container>
+      <h1 className="text-4xl font-extrabold lg:text-5xl border-b pb-2">
+        Sentiment Analysis
+      </h1>
 
       {/* Text Input */}
-      <div style={{ marginBottom: "16px" }}>
-        <label htmlFor="inputText">Enter Text:</label>
+      <div className="mt-8">
         <Textarea
           placeholder="Enter text here..."
           id="inputText"
@@ -84,7 +96,7 @@ export default function Sentiment() {
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setInputText(e.target.value)
           }
-          style={{ width: "100%", height: "100px", margin: "8px 0" }}
+          className="bg-gray-900 w-full h-[300px]"
         />
       </div>
 
@@ -130,114 +142,55 @@ export default function Sentiment() {
 
       {/* Sentiment Result */}
       {loadingSentiment ? (
-        <p>Analyzing sentiment...</p>
+        <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+          Analyzing sentiment...
+        </h2>
       ) : (
         sentiment && (
           <div style={{ marginTop: "16px" }}>
-            <h2>Sentiment Result</h2>
+            <h3 className="text-2xl font-semibold tracking-tight tranition-colors">
+              Sentiment Result
+            </h3>
             <p>{sentiment}</p>
           </div>
         )
       )}
 
       {/* Models Table */}
-      <h2>Available Models</h2>
+      <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+        Available Models
+      </h2>
       {loadingModels ? (
         <p>Loading models...</p>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th
-                style={{
-                  border: "1px solid black",
-                  padding: "8px",
-                }}
-              >
-                Name
-              </th>
-              <th
-                style={{
-                  border: "1px solid black",
-                  padding: "8px",
-                }}
-              >
-                Author
-              </th>
-              <th
-                style={{
-                  border: "1px solid black",
-                  padding: "8px",
-                }}
-              >
-                Downloads
-              </th>
-              <th
-                style={{
-                  border: "1px solid black",
-                  padding: "8px",
-                }}
-              >
-                Likes
-              </th>
-              <th
-                style={{
-                  border: "1px solid black",
-                  padding: "8px",
-                }}
-              >
-                Trending Score
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table>
+          <TableCaption>Models</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[450px]">Name</TableHead>
+              <TableHead>Author</TableHead>
+              <TableHead>Downloads</TableHead>
+              <TableHead className="text-right">Likes</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {models.map((model) => (
-              <tr key={model.id}>
-                <td
-                  style={{
-                    border: "1px solid black",
-                    padding: "8px",
-                  }}
-                >
-                  {model.modelId}
-                </td>
-                <td
-                  style={{
-                    border: "1px solid black",
-                    padding: "8px",
-                  }}
-                >
-                  {model.author}
-                </td>
-                <td
-                  style={{
-                    border: "1px solid black",
-                    padding: "8px",
-                  }}
-                >
-                  {model.downloads}
-                </td>
-                <td
-                  style={{
-                    border: "1px solid black",
-                    padding: "8px",
-                  }}
-                >
-                  {model.likes}
-                </td>
-                <td
-                  style={{
-                    border: "1px solid black",
-                    padding: "8px",
-                  }}
-                >
-                  {model.trendingScore}
-                </td>
-              </tr>
+              <TableRow key={model.id}>
+                <TableCell className="font-medium">{model.id}</TableCell>
+                <TableCell>{model.author}</TableCell>
+                <TableCell>{model.downloads}</TableCell>
+                <TableCell className="text-right">{model.likes}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell className="text-right"> {models.length} </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
       )}
-    </div>
+    </Container>
   );
 }
