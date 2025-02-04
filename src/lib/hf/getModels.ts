@@ -8,6 +8,7 @@ export async function getModels(query: string): Promise<Model[]> {
             "Content-Type": "application/json",
         }
     });
+    console.log(`Bearer ${hfConfig.hfToken}`)
     if (!response.ok) {
         await response.json().then((data) => {
             console.error(data.error);
